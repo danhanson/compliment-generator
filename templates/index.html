@@ -1,0 +1,80 @@
+<!DOCTYPE=html>
+<html>
+  <head>
+    <title>Compliment Control</title>
+  </head>
+  <body>
+    <div id="content">
+      <div id="header">
+        <h1>Compliment Central</h1>
+      </div>
+      <div id="controls">
+        <div id="compiler" class="active tab">
+          <div class="header">
+            <h2>Compiler Configuration</h2>
+          </div>
+          <div class="options">
+            <div class='input-group'>
+              <label for='complimentor'>Complimentor</label>
+              <input id='complimentor'>
+            </div>
+            <div class='input-group'>
+              <label for='recipient-select'>Recipient</label>
+              <select id='recipient-select'>
+                <option hidden selected>Select a Recipient</option>
+                {% for id, name in recipients %}
+                  <option value='{{id}}'>{{name}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class='input-group'>
+              <label for='quality'>Quality</label>
+              <input id='quality' type='range' min='1' max='5' step='1' list='quality-ticks'>
+            </div>
+            <button id="compile-button">Compile Compliment</button>
+          </div>
+        </div>
+        <div id="compiling" class="tab">
+          <h2>Compiling Compliment <span class='compliment'></span></h2>
+          <div class="progress">
+            <div class="progress-bar"></div>
+            <span class="progress-percentage"></span>
+            <span class="progress-status"></span>
+          </div>
+          <button id="cancel-compile">Cancel</button>
+        </div>
+        <div id="compliment-review" class="tab">
+          <h2>Compliment Review</h2>
+          <div class="compliment-area">
+            <h3>Compliment <span class="compliment-id"></span> for <span class="recipient"></span></h3>
+            <p class="compliment-text"></p>
+          </div>
+          <div class="options">
+            <button id="recompile">Compile another Compliment</button>
+            <!--button id="submit">Give to <span class="recipient"></span></button-->
+          </div>
+        </div>
+        <div id="send-compliment" class="tab">
+          <h2>Sending Compliment <span class='compliment'></span></h2>
+          <div class="compliment-area">
+            <h3>Compliment <span class="compliment-id"></span> for <span class="recipient"></span></h3>
+            <p class="compliment-text"></p>
+          </div>
+          <div class="progress">
+            <div class="progress-bar"></div>
+            <span class="progress-percentage"></span>
+            <span class="progress-status"></span>
+          </div>
+        </div>
+        <div id="compliment-sent" class="tab">
+          <h2>Compliment Sent</h2>
+          <p><a class="user-a" href="{{url_for('users')}}"></a> sent compliment <a class="compliment" href="#"></a> to <a class="recipient" href="#"></a> on <a class="date-sent" href="#"></a></p>
+          <div class="options">
+            <button id="retry">Submit another Compliment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
