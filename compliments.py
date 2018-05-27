@@ -80,8 +80,9 @@ def randint(low, hi):
 def generate_compliment(name):
     chosen_semantics = alignments[randint(0, len(alignments))] # make each alignment have the same chance of being chosen
     chosen_phrase = get_choice(chosen_semantics, randint(0, count(chosen_semantics)))
-    return chosen_phrase.format(
+    comp = chosen_phrase.format(
         name=name,
         plural_name=plural_name(recipient)
     )
+    return comp[0].upper()+comp[1:]+'.'
 

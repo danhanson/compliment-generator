@@ -2,14 +2,92 @@
 <html>
   <head>
     <title>Compliment Control</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        border: 0;
+        box-sizing: border-box;
+      }
+      body, html {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        font-family: arial, verdana, sans-serif;
+        background-color: ;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #content {
+        padding: 8px;
+        text-align: center;
+        vertical-align: middle;
+        background-color: whitesmoke;
+        border: 3px solid green;
+        box-shadow: 0 0 5px 0;
+      }
+      #compliment-container {
+        margin: 8px 0;
+        position: relative;
+        font-size: 24px;
+        height: 3.5em;
+        width: 100%;
+      }
+      #compliment {
+        position: absolute;
+        width: 100%;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      button {
+        font-size: 32px;
+        padding: 8px;
+        cursor: pointer;
+        border: 1px solid grey;
+      }
+    </style>
   </head>
   <body>
     <div id="content">
+      <h1>Compliment Generator</h1>
+      <div id="compliment-container">
+        <span id="compliment"></span>
+      </div>
+      <button id="next">Next</button>
+    </div>
+    <script type="text/javascript">
+      var name = localStorage.getItem('name');
+      if(!name || name === 'null') {
+        name = prompt('Before we continue, could you please give me your name first?');
+      }
+      while(!name || name === 'null') {
+        name = prompt('You need to give me a name first.')
+      }
+      localStorage.setItem('name', name);
+      function setCompliment(comp) {
+        document.getElementById('compliment').textContent = comp;
+      }
+      setCompliment('{{compliment}}'.replace('Chad', name));
+      document.getElementById('next').addEventListener('click', function() {
+        fetch('/compliments/generate?recipient=Chad').then(function(response){
+          response.json().then(function(data) {
+            setCompliment(data['content'].replace('Chad', name));
+          });
+        });
+      });
+    </script>
+    <!--div id="content">
       <div id="header">
         <h1>Compliment Central</h1>
       </div>
       <div id="controls">
-        <div id="compiler" class="active tab">
+        <div id="compiler" class="tab">
           <div class="header">
             <h2>Compiler Configuration</h2>
           </div>
@@ -21,10 +99,10 @@
             <div class='input-group'>
               <label for='recipient-select'>Recipient</label>
               <select id='recipient-select'>
-                <option hidden selected>Select a Recipient</option>
-                {% for id, name in recipients %}
-                  <option value='{{id}}'>{{name}}</option>
-                {% endfor %}
+                <option hidden selected value=''>Select a Recipient</option>
+                { for id, name in recipients }
+                  <option value='{id}'>{name}</option>
+                { endfor }
               </select>
             </div>
             <div class='input-group'>
@@ -51,7 +129,6 @@
           </div>
           <div class="options">
             <button id="recompile">Compile another Compliment</button>
-            <!--button id="submit">Give to <span class="recipient"></span></button-->
           </div>
         </div>
         <div id="send-compliment" class="tab">
@@ -68,13 +145,13 @@
         </div>
         <div id="compliment-sent" class="tab">
           <h2>Compliment Sent</h2>
-          <p><a class="user-a" href="{{url_for('users')}}"></a> sent compliment <a class="compliment" href="#"></a> to <a class="recipient" href="#"></a> on <a class="date-sent" href="#"></a></p>
+          <p><a class="user-a" href="{url_for('users')}"></a> sent compliment <a class="compliment" href="#"></a> to <a class="recipient" href="#"></a> on <a class="date-sent" href="#"></a></p>
           <div class="options">
             <button id="retry">Submit another Compliment</button>
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </body>
 </html>
 
